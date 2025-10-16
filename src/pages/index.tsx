@@ -34,7 +34,6 @@ import {
 import VanillaTilt from "vanilla-tilt";
 import { motion } from "framer-motion";
 
-// Enhanced data with icons and colors
 const aboutStats = [
   { 
     label: "Years of experience", 
@@ -186,7 +185,6 @@ function ProfileCard() {
     return () => clearInterval(timer);
   }, []);
 
-  // Inisialisasi efek tilt pada profile card
   useEffect(() => {
     if (profileCardRef.current) {
       VanillaTilt.init(profileCardRef.current, {
@@ -202,7 +200,6 @@ function ProfileCard() {
   }, []);
 
   const status = "available";
-  const currentActivity = "Coding amazing projects 🚀";
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -308,21 +305,6 @@ function ProfileCard() {
               <span className="text-sm text-muted-foreground group-hover:text-violet-300 transition-colors duration-300">
                 {getStatusText(status)}
               </span>
-            </motion.div>
-
-            {/* Current Activity */}
-            <motion.div 
-              className="mt-4 p-4 rounded-xl bg-gradient-to-r from-violet-500/10 to-purple-600/10 border border-violet-500/20 backdrop-blur group-hover:from-violet-500/20 group-hover:to-purple-600/20 group-hover:border-violet-500/40 group-hover:transform group-hover:translate-y-[-2px] transition-all duration-300"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.4 }}
-            >
-              <div className="flex items-center justify-center space-x-2">
-                <Sparkles className="w-4 h-4 text-violet-400 group-hover:scale-110 group-hover:text-violet-300 transition-all duration-300" />
-                <p className="text-sm text-foreground font-medium group-hover:text-violet-400 transition-colors duration-300">
-                  {currentActivity}
-                </p>
-              </div>
             </motion.div>
 
             {/* Quick Stats */}
@@ -585,9 +567,9 @@ export default function Home() {
               data-scroll-speed=".06"
               className="flex flex-row items-center space-x-4 pt-8"
             >
-              <Link href="mailto:igrmdns085@gmail.com" passHref>
+              <Link href="/cv/Iga Ramadana Sahputra-resume.pdf" passHref download>
                 <Button className="bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 text-white px-8 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300">
-                  Get in touch <ChevronRight className="ml-2 h-4 w-4" />
+                  Download CV <ChevronRight className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
               <Link href="#projects" passHref>

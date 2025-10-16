@@ -137,15 +137,15 @@ const services = [
 ];
 
 const skills = [
-  { name: "JavaScript/TypeScript", level: 90, category: "Frontend", icon: Zap },
-  { name: "Next.js/React", level: 85, category: "Frontend", icon: Cpu },
-  { name: "Lua", level: 85, category: "Gaming", icon: GamepadIcon },
-  { name: "Node.js", level: 80, category: "Backend", icon: Server },
-  { name: "Tailwind CSS", level: 92, category: "Frontend", icon: Frame },
-  { name: "MySQL", level: 80, category: "Database", icon: Database },
-  { name: "FiveM Development", level: 87, category: "Gaming", icon: Disc3 },
-  { name: "Python", level: 75, category: "Backend", icon: Code2 },
-  { name: "PHP", level: 90, category: "Backend", icon: Server },
+  { name: "JavaScript/TypeScript", category: "Frontend", icon: Zap },
+  { name: "Next.js/React", category: "Frontend", icon: Cpu },
+  { name: "Lua", category: "Gaming", icon: GamepadIcon },
+  { name: "Node.js", category: "Backend", icon: Server },
+  { name: "Tailwind CSS", category: "Frontend", icon: Frame },
+  { name: "MySQL", category: "Database", icon: Database },
+  { name: "FiveM Development", category: "Gaming", icon: Disc3 },
+  { name: "Python", category: "Backend", icon: Code2 },
+  { name: "PHP", category: "Backend", icon: Server },
 ];
 
 const contactMethods = [
@@ -174,6 +174,37 @@ const contactMethods = [
     gradient: "from-indigo-500 to-blue-500"
   },
 ];
+
+// Skill Card Component
+function SkillCard({ skill }: { skill: typeof skills[0] }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.9 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      whileHover={{ scale: 1.05, y: -5 }}
+      transition={{ duration: 0.3 }}
+    >
+      <Card className="group hover:shadow-2xl transition-all duration-500 border-violet-500/20 bg-gradient-to-b from-background to-violet-500/5 h-full">
+        <CardContent className="p-6">
+          <div className="flex flex-col items-center text-center space-y-4">
+            <div className="p-4 rounded-2xl bg-gradient-to-r from-violet-500 to-purple-600 shadow-lg group-hover:scale-110 transition-transform duration-300">
+              <skill.icon className="w-7 h-7 text-white" />
+            </div>
+            <div className="space-y-2">
+              <h3 className="font-semibold text-foreground text-lg group-hover:text-violet-400 transition-colors duration-300">
+                {skill.name}
+              </h3>
+              <span className="text-xs text-muted-foreground px-3 py-1 bg-violet-500/10 rounded-full border border-violet-500/20">
+                {skill.category}
+              </span>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </motion.div>
+  );
+}
+
 function ProfileCard() {
   const [currentTime, setCurrentTime] = useState(new Date());
   const profileCardRef = useRef<HTMLDivElement>(null);
@@ -275,7 +306,6 @@ function ProfileCard() {
                 />
               </div>
             </motion.div>
-
           </div>
 
           {/* Profile Info */}
@@ -362,30 +392,6 @@ function ProfileCard() {
         </div>
       </div>
     </motion.div>
-  );
-}
-
-// Enhanced Skill Bar Component
-function SkillBar({ skill }: { skill: typeof skills[0] }) {
-  return (
-    <div className="flex items-center justify-between mb-4">
-      <div className="flex items-center space-x-3 flex-1">
-        <skill.icon className="w-4 h-4 text-violet-400" />
-        <span className="text-sm font-medium text-foreground min-w-[140px]">{skill.name}</span>
-        <span className="text-xs text-muted-foreground px-2 py-1 bg-violet-500/10 rounded-full">
-          {skill.category}
-        </span>
-      </div>
-      <div className="w-1/3 bg-gray-200 rounded-full h-3 dark:bg-gray-700 ml-4">
-        <motion.div 
-          className="bg-gradient-to-r from-violet-500 to-purple-600 h-3 rounded-full" 
-          initial={{ width: 0 }}
-          animate={{ width: `${skill.level}%` }}
-          transition={{ duration: 1.5, delay: 0.2 }}
-        />
-      </div>
-      <span className="text-sm text-muted-foreground w-12 text-right">{skill.level}%</span>
-    </div>
   );
 }
 
@@ -479,18 +485,18 @@ export default function Home() {
   }, [carouselApi]);
 
   // Enhanced card hover effect
-    useEffect(() => {
-      const tiltElements: NodeListOf<HTMLElement> = document.querySelectorAll("#tilt");
-      const tilt = Array.from(tiltElements);
-      VanillaTilt.init(tilt, {
-        speed: 400,
-        glare: true,
-        "max-glare": 0.2,
-        gyroscope: true,
-        perspective: 1000,
-        scale: 1.02,
-      });
-    }, []);
+  useEffect(() => {
+    const tiltElements: NodeListOf<HTMLElement> = document.querySelectorAll("#tilt");
+    const tilt = Array.from(tiltElements);
+    VanillaTilt.init(tilt, {
+      speed: 400,
+      glare: true,
+      "max-glare": 0.2,
+      gyroscope: true,
+      perspective: 1000,
+      scale: 1.02,
+    });
+  }, []);
 
   return (
     <Container>
@@ -680,26 +686,19 @@ export default function Home() {
                 ))}
               </div>
 
-              {/* Enhanced Skills Section */}
+              {/* Enhanced Skills Section - Updated to Cards */}
               <motion.div 
-                className="w-full max-w-4xl"
+                className="w-full max-w-6xl"
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
               >
-                <h3 className="text-3xl font-semibold tracking-tight mb-12 text-foreground">
-                  Technical Skills
+                <h3 className="text-3xl font-semibold tracking-tight mb-12 text-foreground text-center">
+                  Technical Stack
                 </h3>
-                <div className="grid gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                   {skills.map((skill, index) => (
-                    <motion.div
-                      key={skill.name}
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.6, delay: index * 0.1 }}
-                    >
-                      <SkillBar skill={skill} />
-                    </motion.div>
+                    <SkillCard key={skill.name} skill={skill} />
                   ))}
                 </div>
               </motion.div>
